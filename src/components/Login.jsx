@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import { useHistory } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, Card, CardTitle, CardBody, FormFeedback, CardFooter } from 'reactstrap';
+import axios from "axios";
 
 
 const formInitial = {
@@ -72,9 +73,24 @@ export default function Login() {
 
 const handleSubmit = (event) => {
   event.preventDefault();
-  if(!isValid) return;
-  history.push("/success")
+  if (!isValid) return;
+
+  const { email, password } = formData;
+
+  axios.post(
+    "https://reqres.in/api/users", 
+    { email, password },
+    { headers: { "x-api-key": "reqres-free-v1" } }
+  )
+  .then(response => {
+    history.push("/success");
+    setFormData(formInitial);
+  })
+  .catch(error => {
+    console.warn(error);
+  });
 }
+
   return (
     <Card>
       <CardTitle tag="h5">
