@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import { useHistory } from 'react-router-dom';
-import axios from "axios"
 import { Button, Form, FormGroup, Label, Input, Card, CardTitle, CardBody, FormFeedback, CardFooter } from 'reactstrap';
 
 
@@ -21,7 +20,6 @@ export default function Login() {
   });
 
   const[isValid, setIsValid] = useState(false);
-  const [id, setId] = useState("");
 
   const errorMessages = {
     email: "Geçerli bir eposta adresi girin.",
@@ -96,8 +94,9 @@ const handleSubmit = (event) => {
               onChange = {handleChange}
               value={formData.email}
               invalid={errors.email}
+              data-cy="email"
             />
-            {errors.email && <FormFeedback>{errorMessages.email}</FormFeedback>}
+            {errors.email && <FormFeedback data-cy="errorEmail">{errorMessages.email}</FormFeedback>}
           </FormGroup>
           <FormGroup>
             <Label for="password">
@@ -111,8 +110,9 @@ const handleSubmit = (event) => {
               onChange = {handleChange}
               value={formData.password}
               invalid={errors.password}
+              data-cy="password"
             />
-            {errors.password && <FormFeedback>{errorMessages.password}</FormFeedback>}
+            {errors.password && <FormFeedback data-cy="errorPassword">{errorMessages.password}</FormFeedback>}
           </FormGroup>
           <FormGroup check>
             <Input 
@@ -122,14 +122,15 @@ const handleSubmit = (event) => {
               onChange = {handleChange}
               checked={formData.terms}
               invalid={errors.terms}
+              data-cy="terms"
             />
             
             <Label check for="terms">
               Kullanım koşullarını, gizlilik politikasını ve KVKK kapsamında kişisel verilerimin işlenmesini kabul ediyorum.
             </Label>
-            {errors.terms && <FormFeedback>{errorMessages.terms}</FormFeedback>}
+            {errors.terms && <FormFeedback data-cy="errorTerms">{errorMessages.terms}</FormFeedback>}
           </FormGroup>
-          <Button disabled={!isValid}>
+          <Button disabled={!isValid} data-cy="submitButton">
           Kayıt ol
           </Button>
         </Form>
